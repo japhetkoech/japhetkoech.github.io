@@ -1,22 +1,25 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: #121212;
+    color: #e0e0e0;
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
 }
 
 header, footer {
+    border-bottom: 1px solid #333;
     text-align: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
 }
 
 nav a {
     text-decoration: none;
-    color: #007bff;
+    color: #90caf9;
     margin: 0 8px;
+}
+
+nav a:hover {
+    color: #64b5f6;
 }
 
 section {
@@ -24,19 +27,23 @@ section {
 }
 
 section h2 {
-    border-bottom: 2px solid #007bff;
+    border-bottom: 2px solid #90caf9;
     padding-bottom: 5px;
 }
 
-ul {
-    list-style-type: square;
-}
-
 a {
-    color: #0056b3;
-    text-decoration: none;
+    color: #64b5f6;
 }
 
 a:hover {
-    text-decoration: underline;
+    color: #bbdefb;
+}
+
+footer {
+    border-top: 1px solid #333;
+    border-bottom: none;
+    margin-top: 50px;
+    padding-top: 15px;
+    font-size: 0.9em;
+    color: #aaa;
 }
