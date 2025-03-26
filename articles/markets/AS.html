@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ERCOT Ancillary Services</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header, footer {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            margin: 1rem 0;
+        }
+        article {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 2rem auto;
+            border: 1px solid #ddd;
+        }
+        .img-caption {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+        .highlight {
+            background-color: #ffffcc;
+            padding: 0 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ERCOT Ancillary Services</h1>
+        <nav>
+            <a href="../../index.html">← Back to Home</a>
+        </nav>
+    </header>
+    
+    <article>
+        <h2>Understanding Ancillary Services in ERCOT</h2>
+        
+        <p>Ancillary services (AS) provide support that ensure reliable electricity transmission from the electricity-generating entities to the load centers.</p>
+        
+        <p>They perform an array of functions, from ensuring load and demand remain balanced second by second to maintaining frequency within the accepted range and acting as capacity reserves in case of unexpected events such as generator failure.</p>
+        
+        <p>ERCOT classifies AS services further into four; Regulation (Up and Down), Responsive reserve services, ERCOT Contingency Reserve Service, and Non-Spin Reserve Service.</p>
+        
+        <p>Each of these perform a specific function but all serve the same general purpose of ensuring reliable transmission.</p>
+        
+        <h3>Types of Ancillary Services</h3>
+        
+        <ol>
+            <li>
+                <strong>Regulation Service</strong> - Capacity deployed <span class="highlight">every 4 seconds</span> in between the 5 minutes Security Constrained Economic Dispatch calculation. It is primarily used to maintain frequency around 60Hz.
+                <ul>
+                    <li>Reg Up works to raise the frequency if it falls below 60Hz.</li>
+                    <li>Reg Down works to lower the frequency if it rises above 60Hz.</li>
+                </ul>
+            </li>
+            
+            <li>
+                <strong>Responsive Reserve Services (RRS)</strong> - Frequency responsive resources that can <span class="highlight">respond immediately</span> to restore grid balance (supply and demand hence frequency) to 60Hz after a disturbance in the grid such as loss of a generator or large load.
+            </li>
+            
+            <li>
+                <strong>ERCOT Contingency Responsive Service (ECRS)</strong> - ECRS is comprised of resources that can respond to recover grid frequency from grid events such as equipment failure, forecast errors & intermittency of wind and solar resources <span class="highlight">within 10 minutes</span>. ECRS have a lower response times compared to RRS. This is the latest ERCOT AS product having being introduced in 2023.
+            </li>
+            
+            <li>
+                <strong>Non-Spin Reserve</strong> - Non spin reserves comprise of capacity that can respond to grid events <span class="highlight">within 30 minutes</span>. They are majorly used, again in case of errors in forecasting and to replace already deployed reserves.
+            </li>
+        </ol>
+        
+        <img src="image1.png" alt="ERCOT live AS dashboard">
+        <div class="img-caption">ERCOT live AS dashboard; <a href="https://www.ercot.com/gridmktinfo/dashboards/ancillaryservices" target="_blank">https://www.ercot.com/gridmktinfo/dashboards/ancillaryservices</a></div>
+        
+        <h3>Day Ahead Capacity Market</h3>
+        
+        <p>ERCOT procures these AS products from the Day Ahead Capacity Market. This is a financially binding forward market where suppliers enter into an agreement to provide an ancillary service a day ahead from the day of operation. ERCOT participates in these markets and the prices are set by the supply offers and demand bids. The prices are cleared at the intersection of the supply and demand curves and is referred to as Market clearing price for capacity.</p>
+        
+        <img src="image2.png" alt="ERCOT capacity clearing market">
+        <div class="img-caption">ERCOT capacity clearing market: <a href="https://www.ercot.com/content/cdr/html/dam_mcpc" target="_blank">https://www.ercot.com/content/cdr/html/dam_mcpc</a></div>
+        
+        <p>The next most logical step after this is inquiring what informs the exact capacity of each AS that ERCOT procures from the market. This is done through a set of methodologies for determining minimum ancillary services requirements for any operating hour, statistically taking into account historical patterns, the amount of intermittent sources on the grid and hourly error forecasts expected.</p>
+        
+        <p>The market clearing prices above reveal noticeable fluctuations throughout the day, with some hours experiencing high prices while others remain relatively low. This variation forms the foundation of my research, which aims to explore the underlying factors driving these price fluctuations.</p>
+        
+        <h3>Case Study</h3>
+        
+        <p>To achieve this, we randomly select three months of the year -- January, April & August to base my study on. AS market clearing prices in the ERCOT DAM were collected and analyzed to try and get perspective. The selection of these three months wasn't based on any scientific methodology but randomly chosen to represent different seasonal conditions in Texas. January is considered the coldest month of the year in Texas, August is regarded the peak summer month and just for context and comparison, April was chosen to serve as the shoulder month characterized by what we may term as moderate temperatures.</p>
+        
+        <p>An analysis of the <em>average prices</em> for each hour across all days in the month was conducted.</p>
+        
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div>
+                <img src="images/image3.png" alt="January AS price patterns" style="max-width: 350px;">
+            </div>
+            <div>
+                <img src="images/image4.png" alt="April AS price patterns" style="max-width: 350px;">
+            </div>
+            <div>
+                <img src="images/image5.png" alt="August AS price patterns" style="max-width: 350px;">
+            </div>
+        </div>
+        <div class="img-caption">Hourly average AS price patterns for the three months</div>
+        
+        <p>Higher prices of AS services highlight their demand and the value placed on these ancillary services.</p>
+        
+        <p><strong>January</strong> sees elevated AS prices both in the Mornings and in the evening for all services with the morning peaks being the more prominent. Their prices stay relatively higher too throughout the day compared with other months. The moderate evening prices, compared with the summer months can be attributed to the cyclic ON/OFF nature of heating systems unlike air conditioning systems that run full time.</p>
+        
+        <p>The morning price spikes reflect a higher demand hence a higher value pegged on ancillary services. This is mostly likely due to heaters in buildings being turned on to warm up spaces from night time temperature setbacks and the low solar power generation due to delayed sunlight experienced in winter mornings.</p>
+        
+        <p>Both <strong>April</strong> and <strong>August</strong> exhibit evening peaks in ancillary service (AS) prices, summer peaks (August) are moderately higher in magnitude compared to April. These peaks indicate a rise in load demand during these hours and activities happening in the grid. The more the load demand and the higher the probability that a contingency can happen on the grid, that is reflected in the AS prices too.</p>
+        
+        <p>At this point of the evening, solar generation ramps down and other generation sources are brought online to cover for solar. Demand also rises during this period, this is a very critical period of grid operation and that is reflected in the high ancillary services pricing.</p>
+        
+        <p>A dashboard was built to do further analysis on the data collected from ERCOT.</p>
+    </article>
+    
+    <footer>
+        <p>© 2025 Your Name</p>
+    </footer>
+</body>
+</html>
