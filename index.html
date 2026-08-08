@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Japhet — Power Systems Engineer</title>
+<meta name="description" content="Power systems engineer studying inverter-based resource integration and grid stability: grid-forming / grid-following converter dynamics, modal analysis, and the oscillations of low-inertia grids." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#ffffff;--panel:#ffffff;--line:#e6e8eb;
+    --text:#202124;--muted:#5f6368;--dim:#80868b;
+    --gold:#9a7714;--cool:#3d5a80;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:"Hanken Grotesk",system-ui,sans-serif;
+    font-size:17px;line-height:1.68;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+
+  .nav{position:fixed;top:0;left:0;right:0;z-index:40;transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
+  .nav.scrolled{background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(60,64,67,.08)}
+  .nav-in{max-width:1120px;margin:0 auto;padding:16px 30px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .nav-name{font-family:"Fraunces",serif;font-weight:500;font-size:19px;color:var(--text);text-decoration:none;letter-spacing:.01em}
+  .nav-name .d{color:var(--gold)}
+  .nav-links{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+  .nav-links a{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:color .2s,background .2s}
+  .nav-links a:hover{color:var(--text);background:rgba(60,64,67,.06)}
+  .nav-links a.active{color:var(--gold)}
+  .nav-links a .ar{color:var(--gold);margin-left:3px}
+
+  .hero{position:relative;height:100vh;min-height:600px;width:100%;overflow:hidden}
+  #art{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,transparent 20%,transparent 44%,rgba(255,255,255,.86) 88%)}
+  .hero-text{position:absolute;left:50%;transform:translateX(-50%);bottom:0;z-index:2;max-width:1120px;width:100%;padding:0 30px 12vh}
+  .hero-eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+  .hero-name{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(44px,8vw,88px);line-height:.98;letter-spacing:-.02em;color:#202124;margin-bottom:20px}
+  .hero-role{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:620px}
+  .hero-role b{color:var(--text);font-weight:500}
+  .scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,6px)}}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 30px}
+  .col{max-width:800px}
+  section.block{padding:92px 0;border-top:1px solid var(--line)}
+  section.block:first-of-type{border-top:none}
+  .sec-label{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:26px}
+  .sec-title{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(28px,4vw,40px);line-height:1.08;letter-spacing:-.015em;color:#202124;margin-bottom:26px}
+  .prose{font-size:18px;color:var(--muted);max-width:720px;margin-bottom:16px}
+  .prose:last-child{margin-bottom:0}
+  .prose b{color:var(--text);font-weight:500}
+  .prose .term{color:var(--cool);font-weight:500}
+  .prose a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(154,119,20,.4)}
+  .prose a:hover{border-bottom-color:var(--gold)}
+
+  .entry{padding:30px 0;border-bottom:1px solid var(--line)}
+  .entry:last-child{border-bottom:none}
+  .entry-top{display:flex;align-items:baseline;gap:14px}
+  .entry-num{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--dim);flex:none;padding-top:4px}
+  .entry-title{font-family:"Fraunces",serif;font-weight:500;font-size:22px;line-height:1.25;color:#202124}
+  a.entry-title{text-decoration:none;transition:color .2s}
+  a.entry-title:hover{color:var(--gold)}
+  .entry-desc{color:var(--muted);margin:8px 0 0;max-width:760px}
+  .entry-desc .term{color:var(--cool)}
+  .entry-meta{margin-top:12px;display:flex;flex-wrap:wrap;gap:7px}
+  .tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.02em;color:var(--dim);border:1px solid var(--line);padding:3px 9px;border-radius:5px}
+  .dl{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .dl a{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--gold);text-decoration:none;border:1px solid rgba(154,119,20,.4);padding:5px 11px;border-radius:6px;transition:background .2s,color .2s}
+  .dl a:hover{background:var(--gold);color:var(--bg)}
+  .dl a[data-pending="true"]{color:var(--dim);border-color:var(--line);border-style:dashed;cursor:default}
+  .dl a[data-pending="true"]:hover{background:none;color:var(--dim)}
+  .add{color:var(--dim);font-style:italic}
+
+  .cv-row{display:grid;grid-template-columns:170px 1fr;gap:10px 30px;padding:22px 0;border-bottom:1px solid var(--line)}
+  .cv-row:last-child{border-bottom:none}
+  .cv-h{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-top:4px}
+  .cv-i{margin-bottom:14px}.cv-i:last-child{margin-bottom:0}
+  .cv-i .a{font-family:"Fraunces",serif;font-size:18px;color:#202124}
+  .cv-i .b{font-size:14px;color:var(--dim)}
+  .cv-i .c{font-size:15px;color:var(--muted);margin-top:4px}
+  @media (max-width:620px){.cv-row{grid-template-columns:1fr;gap:4px}}
+
+  .linkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .linkcard{display:flex;align-items:center;gap:12px;text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:16px;background:#fff;box-shadow:0 1px 2px rgba(60,64,67,.06);transition:border-color .2s,transform .2s,box-shadow .2s}
+  .linkcard:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 12px rgba(60,64,67,.12)}
+  .linkcard .i{font-family:"JetBrains Mono",monospace;font-size:16px;color:var(--gold);width:22px;text-align:center}
+  .linkcard .t{font-family:"Fraunces",serif;font-size:17px;color:#202124;display:block}
+  .linkcard .s{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--dim);margin-top:2px;display:block;word-break:break-all}
+  .linkcard.pending{opacity:.55}
+
+  footer{padding:56px 0 72px;border-top:1px solid var(--line);color:var(--dim);font-size:14px}
+  footer .fn{font-family:"Fraunces",serif;font-size:20px;color:var(--text);margin-bottom:6px}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.scroll-cue{animation:none}html{scroll-behavior:auto}}
+  @media (max-width:560px){.nav-links a{padding:5px 7px;letter-spacing:.05em}.hero-text{padding-bottom:16vh}}
+</style>
+</head>
+<body>
+
+<div class="nav" id="nav">
+  <div class="nav-in">
+    <a class="nav-name" href="#top">Japhet<span class="d">.</span></a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#writing">Writing</a>
+      <a href="#links">Links</a>
+      <a href="#cv">CV</a>
+      <a href="https://github.com/japhetkoech" target="_blank" rel="noopener">GitHub<span class="ar">&#8599;</span></a>
+    </nav>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <canvas id="art" role="img" aria-label="Abstract line drawing traced by a harmonograph — two coupled damped oscillators — slowly morphing."></canvas>
+  <div class="hero-text">
+    <div class="hero-eyebrow">Power Systems &middot; Grid Stability</div>
+    <h1 class="hero-name">Japhet</h1>
+    <p class="hero-role">Power systems engineer studying <b>inverter-based resource integration</b> and the stability of low-inertia grids &mdash; grid-forming and grid-following converter dynamics, modal analysis, and the oscillations that hold a network in sync.</p>
+  </div>
+  <div class="scroll-cue">scroll &darr;</div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- ABOUT -->
+  <section class="block" id="about">
+    <div class="col">
+      <div class="sec-label reveal">About</div>
+      <h2 class="sec-title reveal">I work on the stability of grids that run on inverters.</h2>
+      <p class="prose reveal">I'm a power systems engineer (MSc) focused on the small-signal and electromagnetic-transient behavior of <span class="term">grid-following</span> and <span class="term">grid-forming</span> converters, and the oscillation dynamics that decide whether a low-inertia system stays stable.</p>
+      <p class="prose reveal">My hands-on work runs from <span class="term">modal analysis</span> of multi-machine networks &mdash; eigenvalues, participation factors, short-circuit ratio &mdash; to detailed converter and machine modeling in MATLAB/Simulink and Python. My research trajectory centers on <b>airborne wind energy</b> grid integration: hybrid battery&ndash;supercapacitor storage for pulsating sources today, and grid-forming control for time-periodic systems (LTP / Floquet) on the longer horizon.</p>
+      <p class="prose reveal">Alongside the research I'm working toward <b>NERC Reliability Coordinator</b> certification, and I care about making this material teachable &mdash; most of the writing below started as an attempt to explain it clearly to myself.</p>
+      <p class="prose reveal"><span class="add">Add a line: where you study/work, and what you're looking for next.</span></p>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="block" id="work">
+    <div class="col">
+      <div class="sec-label reveal">Work</div>
+      <h2 class="sec-title reveal">Selected projects</h2>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">01</span><span class="entry-title">WSCC 9-Bus Small-Signal Stability Model</span></div>
+        <p class="entry-desc">A full <span class="term">modal analysis</span> of the WSCC 9-bus system with mixed synchronous and inverter-based generation &mdash; a replication-and-extension of the NREL study on IBR small-signal behavior. The network is linearized, the state-space A-matrix assembled, and its eigenvalues read mode-by-mode; participation factors trace every critical mode to the machines that drive it, and SCR / WSCR / gSCR quantify how grid strength shifts with inverter penetration. Built on the G2ELin toolbox over EMT Simulink models.</p>
+        <div class="entry-meta"><span class="tag">Modal analysis</span><span class="tag">Participation factors</span><span class="tag">SCR / gSCR</span><span class="tag">G2ELin</span></div>
+        <div class="dl"><a data-pending="true">Report (PDF)</a><a data-pending="true">Model (.mlx)</a></div>
+      </div>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">02</span><span class="entry-title">Grid-Following (GFL) Inverter Modeling</span></div>
+        <p class="entry-desc">A detailed <span class="term">grid-following</span> converter around the SRF-PLL, dq current control, and the LCL filter &mdash; the dominant fleet architecture, and the one whose hidden synchronization assumption breaks as the grid weakens. The model exposes where PLL bandwidth and grid impedance interact to create the negative-resistance behavior behind sub-synchronous control interactions; small-signal impedance is extracted for impedance-based Nyquist assessment.</p>
+        <div class="entry-meta"><span class="tag">SRF-PLL</span><span class="tag">dq current control</span><span class="tag">Impedance modeling</span><span class="tag">SSCI</span></div>
+        <div class="dl"><a data-pending="true">Notes (PDF)</a><a data-pending="true">Model (.mlx)</a></div>
+      </div>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">03</span><span class="entry-title">Grid-Forming (GFM) VSM Control</span></div>
+        <p class="entry-desc">A <span class="term">grid-forming</span> converter acting as a controllable voltage source behind an impedance &mdash; imposing frequency and voltage rather than tracking them &mdash; with virtual synchronous machine emulation so it delivers inertia and damping through a synthetic swing equation. The study compares droop, VSM, dVOC, and matching control on tracking, transient response, and stability margin as short-circuit ratio falls into the weak-grid regime.</p>
+        <div class="entry-meta"><span class="tag">VSM / virtual inertia</span><span class="tag">Droop &middot; dVOC</span><span class="tag">Weak-grid stability</span></div>
+        <div class="dl"><a data-pending="true">Report (PDF)</a><a data-pending="true">Model (.mlx)</a></div>
+      </div>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">04</span><span class="entry-title">Detailed Synchronous Generator Modeling</span></div>
+        <p class="entry-desc">A full <span class="term">dq0</span> synchronous machine in the rotor frame &mdash; stator and rotor flux-linkage equations, damper windings, and electromechanical swing dynamics &mdash; the physical reference against which every inverter control is judged. The derivation works through the Park transformation rigorously, including the speed-voltage cross-coupling terms it introduces. This is what "synthetic inertia" from a grid-forming inverter is trying to reproduce.</p>
+        <div class="entry-meta"><span class="tag">Park transformation</span><span class="tag">dq0 frame</span><span class="tag">Swing dynamics</span></div>
+        <div class="dl"><a data-pending="true">Derivation (PDF)</a><a data-pending="true">Model (.mlx)</a></div>
+      </div>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">05</span><span class="entry-title">Short-Circuit &amp; SCR Analysis</span></div>
+        <p class="entry-desc">Grid-strength characterization at the interconnection point: fault-current computation and the family of ratios &mdash; <span class="term">SCR</span>, weighted, composite, and gSCR &mdash; that set how much inverter capacity a bus can host before margins collapse, each tied to a concrete interconnection outcome and back to the modal results in 01.</p>
+        <div class="entry-meta"><span class="tag">Fault analysis</span><span class="tag">SCR / WSCR / CSCR</span><span class="tag">Interconnection</span></div>
+        <div class="dl"><a data-pending="true">Study (PDF)</a></div>
+      </div>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">06</span><span class="entry-title">Three-Phase Induction Machine Theory</span></div>
+        <p class="entry-desc">An <span class="term">arbitrary-reference-frame</span> qd0 induction machine, built block-by-block from the Krause formulation in MATLAB/Simulink &mdash; voltage, flux-linkage, torque, and mechanical equations assembled programmatically through the Simulink API &mdash; developing the cross-coupling speed-voltage terms the transformation produces, with the arbitrary frame as the general case.</p>
+        <div class="entry-meta"><span class="tag">Krause qd0</span><span class="tag">Arbitrary frame</span><span class="tag">Simulink API</span></div>
+        <div class="dl"><a data-pending="true">Document (PDF)</a><a data-pending="true">Model (.mlx)</a></div>
+      </div>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">07</span><span class="entry-title">Hybrid Battery&ndash;Supercapacitor Sizing for Airborne Wind Energy</span></div>
+        <p class="entry-desc">Thesis work: frequency-domain optimal sizing of a hybrid <span class="term">battery&ndash;supercapacitor</span> store that smooths the pulsating power of an airborne wind system. EIS characterizes each device; a Butterworth power split routes high-frequency content to the supercapacitor and low-frequency to the battery; split point and capacities are chosen by convex optimization in CVXPY under a flicker-compliance constraint.</p>
+        <div class="entry-meta"><span class="tag">Hybrid storage</span><span class="tag">EIS</span><span class="tag">CVXPY</span><span class="tag">Flicker</span><span class="tag">AWE</span></div>
+        <div class="dl"><a data-pending="true">Thesis (PDF)</a><a data-pending="true">Sizing code</a></div>
+      </div>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">08</span><span class="entry-title">LTP / HSS Modeling with Floquet Stability</span></div>
+        <p class="entry-desc">Converters driven by a periodically varying source are <span class="term">linear time-periodic</span>, not LTI. This builds the harmonic state-space representation that captures the harmonic coupling an LTI model misses, and applies Floquet theory to judge stability of the periodic orbit &mdash; the analytical backbone of grid-forming control for pulsating sources, where mirror-frequency coupling drives the dominant modes.</p>
+        <div class="entry-meta"><span class="tag">LTP systems</span><span class="tag">Harmonic state-space</span><span class="tag">Floquet</span></div>
+        <div class="dl"><a data-pending="true">Notes (PDF)</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="block" id="writing">
+    <div class="col">
+      <div class="sec-label reveal">Writing</div>
+      <h2 class="sec-title reveal">Articles &amp; notes</h2>
+      <p class="prose reveal" style="margin-bottom:20px">Longer-form technical writing &mdash; lectures, studies, and essays. Most began as an attempt to explain something to myself precisely enough to trust it.</p>
+
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">&mdash;</span><a class="entry-title">Oscillations in IBR-Dominated Power Systems</a></div>
+        <p class="entry-desc">A teaching-style treatment: swing-equation derivation, GFL/GFM control architectures, impedance-based Nyquist analysis, and the real grid events (West Texas, South Australia 2016, Hornsea 2019, Odessa, Iberia 2025) that made these modes famous. <span class="add">Add link.</span></p>
+      </div>
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">&mdash;</span><a class="entry-title">Locational Marginal Pricing &amp; SCED</a></div>
+        <p class="entry-desc">Security-constrained economic dispatch, PTDF shift factors, and the energy/congestion/loss decomposition of LMP &mdash; how physics and constraints set the price at every bus. <span class="add">Add link.</span></p>
+      </div>
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">&mdash;</span><a class="entry-title">AI in Power Systems: the EMT&ndash;phasor divide</a></div>
+        <p class="entry-desc">Where machine learning genuinely helps in stability analysis and where physics-based EMT modeling remains irreplaceable &mdash; with an oscillation taxonomy and an AlphaFold-style framing. <span class="add">Add link.</span></p>
+      </div>
+      <div class="entry reveal"><div class="entry-top"><span class="entry-num">&mdash;</span><a class="entry-title">GridLab AI &mdash; physics-based EE education for the AI era</a></div>
+        <p class="entry-desc">A blueprint for teaching power-systems dynamics with AI as a tutor rather than a shortcut, keeping the physics in the loop. <span class="add">Add link.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section class="block" id="links">
+    <div class="col">
+      <div class="sec-label reveal">Links</div>
+      <h2 class="sec-title reveal">Elsewhere &amp; code</h2>
+      <div class="linkgrid reveal">
+        <a class="linkcard" href="https://github.com/japhetkoech" target="_blank" rel="noopener"><span class="i">&#9113;</span><span><span class="t">GitHub</span><span class="s">github.com/japhetkoech</span></span></a>
+        <a class="linkcard" href="mailto:you@example.com"><span class="i">&#9993;</span><span><span class="t">Email</span><span class="s">you@example.com</span></span></a>
+        <a class="linkcard pending"><span class="i">&#9672;</span><span><span class="t">Google Scholar</span><span class="s">add link</span></span></a>
+        <a class="linkcard pending"><span class="i">&#9673;</span><span><span class="t">ORCID</span><span class="s">add link</span></span></a>
+        <a class="linkcard pending"><span class="i">in</span><span><span class="t">LinkedIn</span><span class="s">add link</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV -->
+  <section class="block" id="cv">
+    <div class="col">
+      <div class="sec-label reveal">Curriculum Vitae</div>
+      <h2 class="sec-title reveal">CV</h2>
+      <div class="dl reveal" style="margin:0 0 30px"><a data-pending="true">Download full CV (PDF)</a></div>
+
+      <div class="cv-row reveal"><div class="cv-h">Education</div><div>
+        <div class="cv-i"><div class="a">MSc &mdash; Electrical / Power Systems Engineering</div><div class="b"><span class="add">Institution &middot; location &middot; year &mdash; add</span></div></div>
+        <div class="cv-i"><div class="a">BSc &mdash; Electrical Engineering</div><div class="b"><span class="add">Institution &middot; location &middot; year &mdash; add</span></div></div>
+      </div></div>
+      <div class="cv-row reveal"><div class="cv-h">Research</div><div>
+        <div class="cv-i"><div class="a">Hybrid battery&ndash;supercapacitor sizing for airborne wind energy</div><div class="b">MSc thesis &middot; frequency-domain sizing, EIS, CVXPY, flicker compliance</div></div>
+        <div class="cv-i"><div class="a">WSCC 9-bus GFL/GFM modal analysis</div><div class="b">Replication &amp; extension of NREL IBR small-signal study &middot; G2ELin</div></div>
+        <div class="cv-i"><div class="a">LTP / HSS modeling with Floquet stability</div><div class="b">Grid-forming control for time-periodic sources (ongoing)</div></div>
+      </div></div>
+      <div class="cv-row reveal"><div class="cv-h">Skills</div><div>
+        <div class="entry-meta" style="margin-top:0">
+          <span class="tag">Modal analysis</span><span class="tag">EMT modeling</span><span class="tag">GFL / GFM control</span><span class="tag">Small-signal stability</span><span class="tag">Park / qd0</span><span class="tag">MATLAB &middot; Simulink</span><span class="tag">Python</span><span class="tag">CVXPY</span><span class="tag">G2ELin</span><span class="tag">SCR / gSCR</span><span class="tag">LaTeX</span>
+        </div>
+      </div></div>
+      <div class="cv-row reveal"><div class="cv-h">Certification</div><div>
+        <div class="cv-i"><div class="a">NERC Reliability Coordinator (RC)</div><div class="b">In progress</div></div>
+      </div></div>
+      <div class="cv-row reveal"><div class="cv-h">Seeking</div><div>
+        <div class="cv-i"><div class="c" style="margin-top:0">ISO/RTO &amp; national-lab internships (ERCOT, MISO, CAISO, NREL, PNNL) &mdash; Summer 2027. <span class="add">Refine as you like.</span></div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fn">Japhet</div>
+    Power system stability &middot; inverter-based resource integration
+  </footer>
+
+</div>
+</main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* nav scrolled state + active section */
+  var nav=document.getElementById("nav");
+  var sections=[].slice.call(document.querySelectorAll("section.block"));
+  var navlinks=[].slice.call(document.querySelectorAll(".nav-links a[href^='#']"));
+  function onScroll(){ nav.classList.toggle("scrolled", window.scrollY>window.innerHeight*0.7); }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+  if("IntersectionObserver" in window){
+    var so=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ var id=e.target.id;
+        navlinks.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href")==="#"+id); }); }});
+    },{rootMargin:"-45% 0px -50% 0px"});
+    sections.forEach(function(s){ so.observe(s); });
+  }
+
+  /* reveal */
+  if("IntersectionObserver" in window && !reduce){
+    var ro=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); ro.unobserve(e.target); } });
+    },{threshold:.12,rootMargin:"0px 0px -6% 0px"});
+    document.querySelectorAll(".reveal").forEach(function(el){ ro.observe(el); });
+  } else { document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); }); }
+
+  /* ============================================================
+     HARMONOGRAPH — abstract line art from two coupled damped
+     oscillators. One thin line, slowly morphing. No labels, no glow.
+     x(t)=sum of two decaying sines; y(t)=sum of two decaying sines.
+     ============================================================ */
+  var cv=document.getElementById("art"), cx=cv.getContext("2d");
+  var W=0,H=0;
+  function fit(){
+    W=cv.clientWidth; H=cv.clientHeight; var dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+    cx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  fit(); window.addEventListener("resize", fit);
+
+  // base frequency ratios (near-integer -> ordered figure), tiny detune keeps it moving
+  var base=[2.0, 3.0, 3.0, 2.0];
+  var damp=0.0085;                 // gentle inward spiral
+  var TT=Math.PI*2*42;             // trace length (many loops)
+  var NPTS=2600;
+
+  function figure(tg){
+    // slowly drifting phases + micro-detune, driven by global time tg (seconds)
+    var p1=tg*0.031, p2=1.3+tg*0.024, p3=2.1+tg*0.028, p4=0.7+tg*0.019;
+    var a1=base[0]+0.004*Math.sin(tg*0.017);
+    var a2=base[1]+0.004*Math.sin(tg*0.013+1.0);
+    var a3=base[2]+0.004*Math.sin(tg*0.015+2.0);
+    var a4=base[3]+0.004*Math.sin(tg*0.011+0.5);
+    return {p1:p1,p2:p2,p3:p3,p4:p4,a1:a1,a2:a2,a3:a3,a4:a4};
+  }
+
+  function draw(tg){
+    cx.clearRect(0,0,W,H);
+    var S=Math.min(W,H)*0.36, ox=W*0.5, oy=H*0.5;
+    var f=figure(tg);
+    cx.beginPath();
+    for(var i=0;i<=NPTS;i++){
+      var t=i/NPTS*TT, e=Math.exp(-damp*t);
+      var x=(Math.sin(f.a1*t+f.p1)+Math.sin(f.a2*t+f.p2))*0.5*e;
+      var y=(Math.sin(f.a3*t+f.p3)+Math.sin(f.a4*t+f.p4))*0.5*e;
+      var px=ox+x*S, py=oy+y*S;
+      if(i===0) cx.moveTo(px,py); else cx.lineTo(px,py);
+    }
+    cx.strokeStyle="rgba(64,74,94,0.34)";
+    cx.lineWidth=1;
+    cx.lineJoin="round";
+    cx.stroke();
+  }
+
+  var running=true, raf=null, start=0;
+  function loop(ts){
+    if(!running||reduce){ raf=null; return; }
+    if(!start)start=ts;
+    draw((ts-start)/1000);
+    raf=requestAnimationFrame(loop);
+  }
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(en){
+      running=en[0].isIntersecting && !document.hidden;
+      if(running && !reduce && raf===null){ start=0; requestAnimationFrame(loop); }
+    },{threshold:.02}).observe(cv);
+  }
+  document.addEventListener("visibilitychange", function(){
+    running=!document.hidden && cv.getBoundingClientRect().bottom>0;
+    if(running && !reduce && raf===null){ start=0; requestAnimationFrame(loop); }
+  });
+
+  if(reduce){ draw(6); } else { requestAnimationFrame(loop); }
+})();
+</script>
+</body>
+</html>
